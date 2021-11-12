@@ -1,0 +1,4 @@
+.env
+./files/certbot/conf/*
+./files/certbot/www/*
+./files/nginx/conf.d
