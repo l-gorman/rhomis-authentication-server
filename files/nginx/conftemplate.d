@@ -18,8 +18,4 @@ server {
                 proxy_set_header Host $host;
                 proxy_cache_bypass $http_upgrade;
         }
-
-	# ssl configuration
-	#ssl_certificate /etc/letsencrypt/live/example.org/fullchain.pem;
-	#ssl_certificate_key /etc/letsencrypt/live/example.org/privkey.pem;
 }
