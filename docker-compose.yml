@@ -17,17 +17,17 @@ services:
   certbot:
     image: certbot/certbot
     restart: unless-stopped
-  volumes:
-      - ./files/certbot/conf:/etc/letsencrypt
-      - ./files/certbot/www:/var/www/certbot
+    volumes:
+        - ./files/certbot/conf:/etc/letsencrypt
+        - ./files/certbot/www:/var/www/certbot
 
   rhomis-auth-server:
     restart: always
     image: ghcr.io/l-gorman/rhomis-authenticator:latest
     ports:
-      - 80:3002
-   #volumes:
-    #  - ./rhomis-authenticator/:/code
+      - 3002:3002
+  #  volumes:
+  #    - ./rhomis-authenticator/:/code
   rhomis-auth-db:
     image: mongo
     ports:
@@ -35,4 +35,4 @@ services:
     volumes:
       - mongodb:/data/db
 volumes:
- mongodb:
+  mongodb:
