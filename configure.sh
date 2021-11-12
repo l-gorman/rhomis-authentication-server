@@ -1,11 +1,8 @@
 #!/bin/bash
 
 # Make empty directories
-mkdir ./files
-
-mkdir ./files/certbot
-mkdir ./files/certbot/www
-mkdir ./files/certbot/conf
+mkdir -p ./files/certbot/www
+mkdir -p ./files/certbot/conf
 
 # Load environment variables
 source .env
