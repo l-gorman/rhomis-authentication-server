@@ -7,7 +7,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=($DATAURL)
+domains=($AUTHURL)
 rsa_key_size=4096
 data_path="./files/certbot"
 email=$ADMINEMAIL # Adding a valid address is strongly recommended
