@@ -1,25 +1,25 @@
 version: '3'
 services:
 
-  # nginx:
-  #   image: nginx:1.15-alpine
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./files/nginx:/etc/nginx/conf.d
-  #     - ./files/certbot/conf:/etc/letsencrypt
-  #     - ./files/certbot/www:/var/www/certbot
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  # # Automatically check whether the certificates need to be renewed
-  #   command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  nginx:
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./files/nginx:/etc/nginx/conf.d
+      - ./files/certbot/conf:/etc/letsencrypt
+      - ./files/certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+  # Automatically check whether the certificates need to be renewed
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-  # certbot:
-  #   image: certbot/certbot
-  #   restart: unless-stopped
-  # volumes:
-  #     - ./files/certbot/conf:/etc/letsencrypt
-  #     - ./files/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+  volumes:
+      - ./files/certbot/conf:/etc/letsencrypt
+      - ./files/certbot/www:/var/www/certbot
 
   rhomis-auth-server:
     restart: always
