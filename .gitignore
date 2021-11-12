@@ -2,4 +2,3 @@
 files/certbot/conf/
 files/certbot/www/
 files/nginx/conf.d
-init-letsencrypt.sh
