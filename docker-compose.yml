@@ -7,6 +7,8 @@ services:
     image: ghcr.io/l-gorman/rhomis-authenticator:latest
     ports:
       - 3002:3002
+    depends_on: 
+      - rhomis-auth-db
     networks:
       - app-network
 
@@ -42,6 +44,8 @@ services:
 
   rhomis-auth-db:
     image: mongo
+    container_name: rhomis-auth-db
+    restart: unless-stopped
     ports:
       - 27017:27017
     volumes:
@@ -51,6 +55,7 @@ services:
 volumes:
   certbot-etc:
   certbot-var:
+  mongodb:
   web-root:
     driver: local
     driver_opts:
