@@ -20,15 +20,15 @@ source .env
 
 while read line ; do 
     echo ${line//example.org/$AUTHURL}; 
-    done < ./template/conf.d > ./nginx-conf/conf.d
+    done < ./templates/conf.d > ./nginx-conf/conf.d
 
 while read line ; do 
     echo ${line//example.org/$AUTHURL}; 
-    done < ./template/docker-compose.yml > ./docker-compose.yml
+    done < ./templates/docker-compose.yml > ./docker-compose.yml
 
 while read line ; do 
     echo ${line//user@email.com/$ADMINEMAIL}; 
-    done < ./template/docker-compose.yml > ./docker-compose.yml
+    done < ./templates/docker-compose.yml > ./docker-compose.yml
 
 
 

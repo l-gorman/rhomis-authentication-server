@@ -1,4 +1,3 @@
-.env
 files/certbot/conf/
 files/certbot/www/
 files/nginx/conf.d
@@ -6,7 +5,9 @@ files/nginx/conf.d
 nginx-conf/
 
 init-letsencrypt.sh
-docker-compose.yml
+./docker-compose.yml
+.env
+
 
 mongodb/
 certbot-var/
