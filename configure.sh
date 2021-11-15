@@ -17,18 +17,21 @@ source .env
 # while read line ; do 
 #     echo ${line//example.org/$AUTHURL}; 
 #     done < ./files/nginxTemplate/conftemplate.d > ./files/nginx/conf.d
+IFS=''
 
 while read line ; do 
-    echo ${line//example.org/$AUTHURL}; 
+    
+    echo "${line//example.org/$AUTHURL}"; 
     done < ./templates/conf.d > ./nginx-conf/conf.d
 
 while read line ; do 
-    echo ${line//example.org/$AUTHURL}; 
+    line="${line//user@email.com/$ADMINEMAIL}"
+    echo "${line//example.org/$AUTHURL}"; 
     done < ./templates/docker-compose.yml > ./docker-compose.yml
 
-while read line ; do 
-    echo ${line//user@email.com/$ADMINEMAIL}; 
-    done < ./templates/docker-compose.yml > ./docker-compose.yml
+# while read line ; do 
+#     echo "${line//user@email.com/$ADMINEMAIL}"; 
+#     done < ./templates/docker-compose.yml > ./docker-compose.yml
 
 
 
