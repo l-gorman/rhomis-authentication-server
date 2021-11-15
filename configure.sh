@@ -5,7 +5,7 @@
 # mkdir -p ./files/certbot/conf
 # mkdir -p ./files/nginx
 
-mkdir nginx-conf/
+mkdir -p nginx-conf/
 
 # Load environment variables
 source .env
