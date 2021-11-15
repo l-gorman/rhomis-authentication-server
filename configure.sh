@@ -15,7 +15,7 @@ echo "" >> ./files/nginx/conftemplate.d
 
 while read line ; do 
     echo ${line//example.org/$AUTHURL}; 
-    done < ./files/nginx/conftemplate.d > ./files/nginx/conf.d
+    done < ./files/nginxTemplate/conftemplate.d > ./files/nginx/conf.d
 
-
+chmod +x init-letsencrypt.sh
 

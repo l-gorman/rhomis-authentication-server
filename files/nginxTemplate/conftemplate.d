@@ -1,6 +1,11 @@
 server {
     listen 80;
     server_name example.org;
+
+    location /.well-known/acme-challenge/ {
+    root /var/www/certbot;
+}
+
     location / {
         return 301 https://$host$request_uri;
     }    
@@ -18,4 +23,7 @@ server {
                 proxy_set_header Host $host;
                 proxy_cache_bypass $http_upgrade;
         }
+
+        ssl_certificate /etc/letsencrypt/live/example.org/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/example.org/privkey.pem;
 }
