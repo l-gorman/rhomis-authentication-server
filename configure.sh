@@ -10,7 +10,7 @@ source .env
 # Replace the example domain with the real domain
 # in the nginx configuration file
 
-echo "" >> ./files/nginx/conftemplate.d
+echo "" >> ./files/nginxTemplate/conftemplate.d
 
 
 while read line ; do 
