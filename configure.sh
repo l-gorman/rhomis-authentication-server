@@ -17,5 +17,7 @@ while read line ; do
     echo ${line//example.org/$AUTHURL}; 
     done < ./files/nginxTemplate/conftemplate.d > ./files/nginx/conf.d
 
+
+cp ./files/initialisationTemplate/init-letsencrypt-template.sh ./init-letsencrypt.sh
 chmod +x init-letsencrypt.sh
 
