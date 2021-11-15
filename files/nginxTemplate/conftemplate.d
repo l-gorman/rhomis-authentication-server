@@ -1,10 +1,12 @@
 server {
     listen 80;
+    listen [::]:80;
+
     server_name example.org;
 
     server_tokens off;
 
-    location /.well-known/acme-challenge/ {
+    location ^~ /.well-known/acme-challenge/ {
     root /var/www/certbot;
     }
 
@@ -13,8 +15,8 @@ server {
     }    
 }
 server {
-        listen 80;
 	listen 443 ssl;
+        listen [::]:443 ssl;
         server_name example.org;
         server_tokens off;
 
