@@ -5,7 +5,8 @@
 # mkdir -p ./files/certbot/conf
 # mkdir -p ./files/nginx
 
-mkdir -p nginx-conf/
+mkdir -p data/nginx
+
 
 # Load environment variables
 source .env
@@ -22,19 +23,19 @@ IFS=''
 while read line ; do 
     
     echo "${line//example.org/$AUTHURL}"; 
-    done < ./templates/conf.d > ./nginx-conf/nginx.conf
+    done < ./templates/conf.d > ./data/nginx/app.conf
 
 while read line ; do 
     line="${line//user@email.com/$ADMINEMAIL}"
     echo "${line//example.org/$AUTHURL}"; 
     done < ./templates/docker-compose.yml > ./docker-compose.yml
 
-# while read line ; do 
-#     echo "${line//user@email.com/$ADMINEMAIL}"; 
-#     done < ./templates/docker-compose.yml > ./docker-compose.yml
+while read line ; do 
+    line="${line//user@email.com/$ADMINEMAIL}"
+    echo "${line//example.org/$AUTHURL}"; 
+    done < ./templates/init-letsencrypt.sh > ./init-letsencrypt.sh
 
 
-
-# cp ./files/initialisationTemplate/init-letsencrypt-template.sh ./init-letsencrypt.sh
-# chmod +x init-letsencrypt.sh
+cp ./files/initialisationTemplate/init-letsencrypt-template.sh ./init-letsencrypt.sh
+chmod +x init-letsencrypt.sh
 
