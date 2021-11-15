@@ -12,13 +12,13 @@ services:
     networks:
       - app-network
 
-  nginx:
-    container_name: nginx
+  rhomis-web-server:
+    container_name: rhomis-web-server
     image: nginx:1.15-alpine
     restart: unless-stopped
     volumes:
       - web-root:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
+      - ./nginx-conf/:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
     ports:
@@ -37,7 +37,7 @@ services:
       - certbot-var:/var/lib/letsencrypt
       - web-root:/var/www/html
     depends_on:
-      - nginx
+      - rhomis-web-server
     #entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     command: certonly --webroot --webroot-path=/var/www/html --email user@email.com --agree-tos --no-eff-email --staging -d example.org 
 
@@ -50,7 +50,8 @@ services:
       - 27017:27017
     volumes:
       - mongodb:/data/db
-
+    networks:
+      - app-network
 
 volumes:
   certbot-etc:
