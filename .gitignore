@@ -3,4 +3,12 @@ files/certbot/conf/
 files/certbot/www/
 files/nginx/conf.d
 
+nginx-conf/
+
 init-letsencrypt.sh
+docker-compose.yml
+
+mongodb/
+certbot-var/
+certbot-etc/
+web-root/
