@@ -5,7 +5,7 @@ files/nginx/conf.d
 nginx-conf/
 
 init-letsencrypt.sh
-./docker-compose.yml
+docker-compose.yml
 .env
 
 

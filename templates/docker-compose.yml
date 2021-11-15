@@ -21,8 +21,12 @@ services:
       - ./nginx-conf/:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
+
     ports:
       - "80:80"
+      - "443:443"
+
     depends_on:
       - rhomis-auth-server
     networks:
@@ -60,8 +64,6 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/
-      o: bind
 
 networks:
   app-network:

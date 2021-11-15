@@ -22,7 +22,7 @@ IFS=''
 while read line ; do 
     
     echo "${line//example.org/$AUTHURL}"; 
-    done < ./templates/conf.d > ./nginx-conf/conf.d
+    done < ./templates/conf.d > ./nginx-conf/nginx.conf
 
 while read line ; do 
     line="${line//user@email.com/$ADMINEMAIL}"
