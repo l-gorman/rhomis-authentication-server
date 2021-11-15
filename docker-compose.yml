@@ -1,15 +1,24 @@
 version: '3'
 services:
 
+  rhomis-auth-server:
+    container_name: rhomis-auth-server
+    restart: always
+    image: ghcr.io/l-gorman/rhomis-authenticator:latest
+    ports:
+      - 3002:3002
+    networks:
+      - app-network
+
   nginx:
     container_name: nginx
     image: nginx:1.15-alpine
     restart: unless-stopped
     volumes:
       - web-root:/var/www/html
-      - ./files/nginx/:/etc/nginx/conf.d
-      - ./files/certbot/conf:/etc/letsencrypt
-      - ./files/certbot/www:/var/www/certbot
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     ports:
       - 80:80
       - 443:443
@@ -17,34 +26,20 @@ services:
       - rhomis-auth-server
     networks:
       - app-network
-  # Automatically check whether the certificates need to be renewed
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   certbot:
     image: certbot/certbot
-    container-name: certbot
-
-    restart: unless-stopped
+    container_name: certbot
     volumes:
-        - ./files/certbot/conf:/etc/letsencrypt
-        - ./files/certbot/www:/var/www/certbot
-        - ./files/certbot/var:/var/lib/letsencrypt
-        - ./log/letsencrypt:/var/log/letsencrypt
-        - web-root:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
     depends_on:
       - nginx
     #entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     command: certonly --webroot --webroot-path=/var/www/html --email leogorman@outlook.com --agree-tos --no-eff-email --staging -d auth.l-gorman.com 
 
-  rhomis-auth-server:
-    restart: always
-    image: ghcr.io/l-gorman/rhomis-authenticator:latest
-    ports:
-      - 3002:3002
-    networks:
-      - app-network
-  #  volumes:
-  #    - ./rhomis-authenticator/:/code
+
   rhomis-auth-db:
     image: mongo
     ports:
@@ -52,14 +47,16 @@ services:
     volumes:
       - mongodb:/data/db
   mongodb:
+
+
 volumes:
-  /files/certbot/conf:
-  /files/certbot/var:
+  certbot-etc:
+  certbot-var:
   web-root:
     driver: local
     driver_opts:
       type: none
-      device: ~/
+      device: /home/views/
       o: bind
 
 networks:

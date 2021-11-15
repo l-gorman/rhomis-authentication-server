@@ -2,39 +2,57 @@ server {
     listen 80;
     listen [::]:80;
 
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
     server_name example.org;
 
-    server_tokens off;
-
     location ^~ /.well-known/acme-challenge/ {
-    root /var/www/certbot;
+        allow all
+        root /var/www/certbot;
     }
 
     location / {
-        return 301 https://$host$request_uri;
-    }    
+                rewrite ^ https://$host$request_uri? permanent;
+        }    
 }
 server {
-	listen 443 ssl;
-        listen [::]:443 ssl;
+	listen 443 ssl http2;
+        listen [::]:443 ssl http2;
         server_name example.org;
+
         server_tokens off;
 
         ssl_certificate /etc/letsencrypt/live/example.org/fullchain.pem;
         ssl_certificate_key /etc/letsencrypt/live/example.org/privkey.pem;
-        include /etc/letsencrypt/options-ssl-nginx.conf;
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+        ssl_buffer_size 8k;
+        ssl_dhparam /etc/ssl/certs/dhparam-2048.pem;
+
+        ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+        ssl_prefer_server_ciphers on;
+
+        ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
+
+        ssl_ecdh_curve secp384r1;
+        ssl_session_tickets off;
+
+        ssl_stapling on;
+        ssl_stapling_verify on;
+        resolver 8.8.8.8;
+
 
         location / {
                 proxy_pass http://localhost:3002;
-                proxy_http_version 1.1;
-                proxy_set_header        Upgrade         $http_upgrade;
-                proxy_set_header        Connection      'upgrade';
-                proxy_cache_bypass      $http_upgrade;
-                proxy_set_header        Host             $http_host;
-                proxy_set_header        X-Real-IP        $remote_addr;
-                proxy_set_header        X-Forwarded-For  $proxy_add_x_forwarded_for;
+                add_header X-Frame-Options "SAMEORIGIN" always;
+                add_header X-XSS-Protection "1; mode=block" always;
+                add_header X-Content-Type-Options "nosniff" always;
+                add_header Referrer-Policy "no-referrer-when-downgrade" always;
+                add_header Content-Security-Policy "default-src * data: 'unsafe-eval' 'unsafe-inline'" always;
         }
+
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
 
         
 }
