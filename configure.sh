@@ -3,6 +3,7 @@
 # Make empty directories
 mkdir -p ./files/certbot/www
 mkdir -p ./files/certbot/conf
+mkdir -p ./files/nginx
 
 # Load environment variables
 source .env
@@ -11,7 +12,6 @@ source .env
 # in the nginx configuration file
 
 echo "" >> ./files/nginxTemplate/conftemplate.d
-
 
 while read line ; do 
     echo ${line//example.org/$AUTHURL}; 
