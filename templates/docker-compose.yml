@@ -3,7 +3,7 @@ services:
 
   rhomis-auth-server:
     container_name: rhomis-auth-server
-    restart: always
+    restart: unless-stopped
     image: ghcr.io/l-gorman/rhomis-authenticator:latest
     ports:
       - 3002:3002
@@ -14,7 +14,7 @@ services:
 
   rhomis-web-server:
     container_name: rhomis-web-server
-    image: nginx:1.15-alpine
+    image: nginx:mainline-alpine
     restart: unless-stopped
     volumes:
       - web-root:/var/www/html
@@ -22,8 +22,7 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
     depends_on:
       - rhomis-auth-server
     networks:
