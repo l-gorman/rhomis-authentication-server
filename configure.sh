@@ -25,10 +25,13 @@ while read line ; do
     echo "${line//example.org/$AUTHURL}"; 
     done < ./templates/conf.d.template > ./data/nginx/app.conf
 
-while read line ; do 
+while read -r line; do 
+
     line="${line//user@email.com/$ADMINEMAIL}"
+
     echo "${line//example.org/$AUTHURL}"; 
     done < ./templates/docker-compose-template.yml > ./docker-compose.yml
+
 
 while read line ; do 
     line="${line//user@email.com/$ADMINEMAIL}"
