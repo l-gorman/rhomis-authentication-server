@@ -9,8 +9,8 @@ services:
       - ./files/certbot/conf:/etc/letsencrypt
       - ./files/certbot/www:/var/www/certbot
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
   # Automatically check whether the certificates need to be renewed
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
@@ -20,6 +20,8 @@ services:
     volumes:
         - ./files/certbot/conf:/etc/letsencrypt
         - ./files/certbot/www:/var/www/certbot
+        - ./log/letsencrypt:/var/log/letsencrypt
+
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   rhomis-auth-server:
