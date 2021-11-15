@@ -36,6 +36,5 @@ while read line ; do
     done < ./templates/init-letsencrypt.sh > ./init-letsencrypt.sh
 
 
-cp ./files/initialisationTemplate/init-letsencrypt-template.sh ./init-letsencrypt.sh
 chmod +x init-letsencrypt.sh
 
