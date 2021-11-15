@@ -11,7 +11,6 @@ source .env
 # Replace the example domain with the real domain
 # in the nginx configuration file
 
-echo "" >> ./files/nginxTemplate/conftemplate.d
 
 while read line ; do 
     echo ${line//example.org/$AUTHURL}; 
