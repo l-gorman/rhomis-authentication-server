@@ -3,9 +3,9 @@
 # Make empty directories
 # mkdir -p ./files/certbot/www
 # mkdir -p ./files/certbot/conf
-# mkdir -p ./files/nginx
+ mkdir -p ./files/nginx
 
-mkdir -p data/nginx
+#mkdir -p data/nginx
 
 
 # Load environment variables
@@ -23,17 +23,17 @@ IFS=''
 while read line ; do 
     
     echo "${line//example.org/$AUTHURL}"; 
-    done < ./templates/conf.d > ./data/nginx/app.conf
+    done < ./templates/conf.d.template > ./data/nginx/app.conf
 
 while read line ; do 
     line="${line//user@email.com/$ADMINEMAIL}"
     echo "${line//example.org/$AUTHURL}"; 
-    done < ./templates/docker-compose.yml > ./docker-compose.yml
+    done < ./templates/docker-compose-template.yml > ./docker-compose.yml
 
 while read line ; do 
     line="${line//user@email.com/$ADMINEMAIL}"
     echo "${line//example.org/$AUTHURL}"; 
-    done < ./templates/init-letsencrypt.sh > ./init-letsencrypt.sh
+    done < ./templates/init-letsencrypt-template.sh > ./init-letsencrypt.sh
 
 
 chmod +x init-letsencrypt.sh
