@@ -3,9 +3,9 @@
 # Make empty directories
 # mkdir -p ./files/certbot/www
 # mkdir -p ./files/certbot/conf
- mkdir -p ./files/nginx
+#mkdir -p ./files/nginx
 
-#mkdir -p data/nginx
+mkdir -p data/nginx
 
 
 # Load environment variables
