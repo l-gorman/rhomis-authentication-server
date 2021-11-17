@@ -1,7 +1,7 @@
 init-letsencrypt.sh
 docker-compose.yml
 .env
-./data/*
+data/
 mongodb/
 certbot-var/
 certbot-etc/
